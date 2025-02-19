@@ -6,8 +6,8 @@ const FULL_HEART = '♥'
 function doThings(){
 
   // Hide error message by default 
-  let error = document.getElementById("modal");
-  error.classList.add('hidden')
+  let errorModal = document.getElementById("modal");
+  errorModal.classList.add('hidden')
 
   // Add event listener for heart clicks 
   let likes = document.getElementsByClassName("like-glyph");  
@@ -19,7 +19,7 @@ function doThings(){
   // A function for updating the DOM based on heart clicks 
   function updateHeart(action){
     console.log(`inside update heart: ${action.innerText}`)
-    
+
     let heart = action.innerText;
 
     if (heart === EMPTY_HEART){
@@ -37,10 +37,12 @@ function doThings(){
   function serverCall(event){
     let action = event.target;
     mimicServerCall()
-    .then((res)=>res.json)
-    .then(updateHeart(action))
-    .catch(()=>{error.classList.remove('hidden')})
-    .catch(setTimeout(()=>{error.classList.add('hidden')},3000)) 
+    .then(()=>updateHeart(action))
+    .catch((error)=>{
+      errorModal.querySelector("h2").innerText = error;
+      errorModal.classList.remove('hidden');
+      setTimeout(()=>{errorModal.classList.add('hidden')},3000)
+    })
     // Show alert [missing]
   }
 

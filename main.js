@@ -43,7 +43,6 @@ function doThings(){
       errorModal.classList.remove('hidden');
       setTimeout(()=>{errorModal.classList.add('hidden')},3000)
     })
-    // Show alert [missing]
   }
 
 }
